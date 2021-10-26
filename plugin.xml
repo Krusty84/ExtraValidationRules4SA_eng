@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+<extension point="org.eclipse.emf.validation.constraintProviders">
+      <constraintProvider>
+         <!-- that namespaced we are will be used, https://wiki.polarsys.org/Capella/Tutorials/Extensibility/Validation_Rules -->
+         <package namespaceUri="http://www.polarsys.org/capella/core/fa/1.3.0"/>
+         <!-- category of validation, this that we are will extending system analysis/justification/transition-->
+         <constraints categories="capella.category/transition/justification/system_analysis">
+           <!-- 
+    id - A unique identifier for the constraint.
+    name - A localizable name for the constraint (appears in the GUI). Note that {0} identify the element type and {1} its name.
+    lang - Identifies the language in which the constraint is expressed. The language is not case-sensitive. The currently supported languages are Java and OCL. For the Java language, this element identifies a class that extends the AbstractValidationRule class. Other languages, such as OCL, may make use of the body of the constraint element and/or one or more parameters.
+    severity - The severity of the problem if the constraint is violated. This correlates to the severity of tasks in the Tasks view of the Eclipse environment. The default severity (if none specified) is ERROR. The CANCEL severity should be used with caution, as it causes the validation operation to be interrupted, possibly resulting in the loss of valuable diagnostic information from other constraints.
+    statusCode - The plug-in unique status code, useful for logging.
+    class - For "Java" language constraints only, identifies a class implementing the constraint. The class must extend the AbstractValidationRule class, providing an implementation of the abstract method:
+
+    validate()
+
+    mode - Describes whether a constraint operates in batch mode, live mode, or feature mode. The default is batch if not specified.
+    isEnabledByDefault - Indicates if this constraint should be enabled by default. User can change this setting in preferences. The default value is true.
+           код ошибки -->
+           <!-- first validation rule -->
+            <constraint
+                  class="extravalidationrules4sa_eng.CheckingSystemFunctionWhatIsRealized"
+                  id="TJ_SA_100"
+                  isEnabledByDefault="true"
+                  lang="Java"
+                  mode="Batch"
+                  name="TJ_SA_100 - Operational activities is realized in System Function"
+                  severity="ERROR"
+                  statusCode="1">
+                  <!-- -->
+                  <!-- message that will be display if validation will be fail-->
+               <message>
+                 System Function {1} does not have any associated Operational Activities!
+               </message>
+               <target class="SystemFunction"/>
+               <!-- description of this validation-->
+               <description>
+                  This rule checks that an Operational Activities is realized by at least one System Function.
+               </description>
+            </constraint>
+
+          <!-- second validation rule -->
+            <constraint
+                  class="extravalidationrules4sa_eng.CheckingDefaultNameOfSystemFunction"
+                  id="TJ_SA_101"
+                  isEnabledByDefault="true"
+                  lang="Java"
+                  mode="Batch"
+                  name="TJ_SA_101 - Checking name of System Fucntion"
+                  severity="WARNING"
+                  statusCode="1">
+                  <!-- -->
+                  <!-- message that will be display if validation will be fail-->
+               <message>
+                 System Function {1} has a default name, please change it for reflect that this function do
+               </message>
+               <target class="SystemFunction"/>
+              <!-- description of this validation-->
+               <description>
+                  This rule checks name of System Function, it must be not a default name
+               </description>
+            </constraint>
+            <!-- third validation rule and so on-->   
+         </constraints>
+      </constraintProvider>
+   </extension>
+</plugin>
